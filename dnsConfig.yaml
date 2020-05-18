@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dns-resolver
+  namespace: jibri
+data:
+  resolv.conf: |-
+    nameserver 8.8.8.8
+    nameserver 10.96.0.10
+    search jibri.svc.cluster.local svc.cluster.local cluster.local 
+    options ndots:5

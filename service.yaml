@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jibri-service
+spec:
+  selector:
+  component: jibri      
+  type: ClusterIP
+  ports:
+    - targetPort:80
+      port:8001
