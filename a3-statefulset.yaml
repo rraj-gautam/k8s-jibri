@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: jibri-one
+  name: jibri-three
   labels:
     component: jibri
   namespace: jibri
@@ -17,7 +17,7 @@ spec:
         component: jibri
     spec:
       nodeSelector:
-        asound: alsa1
+        asound: alsa3
       hostAliases:
         - ip: 'jitsi server ip'
           hostnames:

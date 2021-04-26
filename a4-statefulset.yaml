@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: jibri-one
+  name: jibri-four
   labels:
     component: jibri
   namespace: jibri
@@ -17,7 +17,7 @@ spec:
         component: jibri
     spec:
       nodeSelector:
-        asound: alsa1
+        asound: alsa4
       hostAliases:
         - ip: 'jitsi server ip'
           hostnames:
@@ -66,6 +66,7 @@ spec:
               add:
                 - NET_BIND_SERVICE
                 - SYS_ADMIN
+
       volumes:
         - name: jibri-recorder
           emptyDir: {}
@@ -83,3 +84,4 @@ spec:
         - name: shm
           hostPath:
             path: /dev/shm
+

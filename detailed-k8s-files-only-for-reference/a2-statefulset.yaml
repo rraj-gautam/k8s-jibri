@@ -1,13 +1,13 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: jibri-one
+  name: jibri-two
   labels:
     component: jibri
   namespace: jibri
 spec:
-  serviceName: jibri-one
-  replicas: 5
+  serviceName: jibir-one
+  replicas: 20
   selector:
     matchLabels:
       component: jibri
@@ -17,16 +17,16 @@ spec:
         component: jibri
     spec:
       nodeSelector:
-        asound: alsa1
+        asound: alsa2
       hostAliases:
-        - ip: 'jitsi server ip'
+        - ip: '1.1.1.1'
           hostnames:
-            - meet.example.com
+            - example.com
       securityContext:
         fsGroup: 63
       initContainers:
         - name: init-set
-          image: itsmaniche18/init-container
+          image: xuxant/init-container
           command: 
             - /tmp/copyfile.sh
           volumeMounts:
@@ -34,7 +34,7 @@ spec:
               mountPath: /home/jibri
       containers:
         - name: jibri
-          image: docker.io/itsmaniche18/jibri
+          image: docker.io/jitsi/jibri
 
           resources:
             limits:
@@ -47,6 +47,10 @@ spec:
             - configMapRef:
                 name: jibri-env
           volumeMounts:
+            - name: dns-resolver
+              mountPath: '/etc/resolv.conf'
+              subPath: resolv.conf
+              readOnly: false
             - name: jibri-recorder
               mountPath: /config/recordings
             - name: jibri-logs
@@ -58,6 +62,9 @@ spec:
             - name: finalize-sh
               mountPath: /config/finalize.sh
               subPath: finalize.sh
+            # - name: asoundrc
+            #   mountPath: /home/jibri/.asoundrc
+            #   subpath: .asoundrc
             - name: home-dir
               mountPath: /home/jibri
           securityContext:
@@ -66,9 +73,14 @@ spec:
               add:
                 - NET_BIND_SERVICE
                 - SYS_ADMIN
+
       volumes:
+        - name: dns-resolver
+          configMap:
+            name: dns-resolver
         - name: jibri-recorder
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: jibri-volume-claim-2
         - name: jibri-logs
           emptyDir: {}
         - name: snd
@@ -80,6 +92,11 @@ spec:
             defaultMode: 0777
         - name: home-dir
           emptyDir: {}
+        # - name: asoundrc
+        #   configMap:
+        #     name: assound-1
+        #     defaultMode: 0644
         - name: shm
           hostPath:
             path: /dev/shm
+
