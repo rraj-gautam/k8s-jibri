@@ -6,38 +6,9 @@ metadata:
 data:
   finalize.sh: |-
     #!/bin/bash
-    # AWS credentials
-    AWS_ACCESS_KEY=aws_access_key
-    AWS_SECRET_KEY=aws_secret_key
-    AWS_DEFAULT_REGION=aws_region
-    S3_BUCKET_NAME=recordings-conference
-
     RECORDINGS_DIR=$1
-
-    echo "Uploading the recording to S3"
-
-    # Get the folder name
-    RECORDINGS=`ls $RECORDINGS_DIR/*.mp4`
-    RECORDINGS=`basename $RECORDINGS`
-    FOLDER_NAME=$(echo $RECORDINGS | tr "_" "\n")
-
-    for name in $FOLDER_NAME
-    do
-    FOLDER_NAME=$name
-      break
-      done
-
-    upload(){
-          echo "Uploading to AWS for web.call.group ... "
-          # Set credentials for aws cli
-          aws configure set aws_access_key_id $AWS_ACCESS_KEY
-          aws configure set aws_secret_access_key $AWS_SECRET_KEY
-          aws configure set default.region $AWS_DEFAULT_REGION
-          # Upload to S3
-          aws s3 sync $RECORDINGS_DIR s3://$S3_BUCKET_NAME/recordings/$FOLDER_NAME/
-          }
-
-    upload
-    echo "Deleting Video from Host..."
-    rm -rf $RECORDINGS_DIR
-    echo "Deleted Video from Host..."
+    echo "This is a dummy finalize script" > /tmp/finalize.out
+    echo "The script was invoked with recordings directory $RECORDINGS_DIR." >> /tmp/finalize.out
+    echo "You should put any finalize logic (renaming, uploading to a service" >> /tmp/finalize.out
+    echo "or storage provider, etc.) in this script" >> /tmp/finalize.out
+    exit 0

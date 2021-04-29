@@ -4,11 +4,11 @@ metadata:
   name: jibri-env
   namespace: jibri
 data:
-  XMPP_AUTH_DOMAIN: auth.example.com 
-  XMPP_INTERNAL_MUC_DOMAIN: internal.auth.example.com
-  XMPP_RECORDER_DOMAIN: recorder.example.com
-  XMPP_SERVER: example.com
-  XMPP_DOMAIN: example.com
+  XMPP_AUTH_DOMAIN: auth.meet.example.com 
+  XMPP_INTERNAL_MUC_DOMAIN: internal.auth.meet.example.com
+  XMPP_RECORDER_DOMAIN: recorder.meet.example.com
+  XMPP_SERVER: meet.example.com
+  XMPP_DOMAIN: meet.example.com
   JIBRI_XMPP_USER: jibri
   JIBRI_XMPP_PASSWORD: jibriauthpass
   JIBRI_BREWERY_MUC: JibriBrewery
@@ -19,4 +19,4 @@ data:
   JIBRI_STRIP_DOMAIN_JID: conference
   JIBRI_LOGS_DIR: /config/logs
   DISPLAY: :0
-  TZ: Europe/Berlin
+  TZ: Asia/Kathmandu
